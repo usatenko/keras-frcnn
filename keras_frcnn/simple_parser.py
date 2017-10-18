@@ -1,3 +1,4 @@
+import os
 import cv2
 import numpy as np
 
@@ -33,9 +34,9 @@ def get_data(input_path):
 			if filename not in all_imgs:
 				all_imgs[filename] = {}
 				
-				img = cv2.imread(filename)
+				img = cv2.imread(os.path.join(os.path.dirname(input_path), filename))
 				(rows,cols) = img.shape[:2]
-				all_imgs[filename]['filepath'] = filename
+				all_imgs[filename]['filepath'] = os.path.join(os.path.dirname(input_path), filename)
 				all_imgs[filename]['width'] = cols
 				all_imgs[filename]['height'] = rows
 				all_imgs[filename]['bboxes'] = []

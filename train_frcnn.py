@@ -58,12 +58,12 @@ C.rot_90 = bool(options.rot_90)
 C.model_path = options.output_weight_path
 C.num_rois = int(options.num_rois)
 
-if options.network == 'vgg':
-	C.network = 'vgg'
-	from keras_frcnn import vgg as nn
-elif options.network == 'resnet50':
+if options.network == 'resnet50':
 	from keras_frcnn import resnet as nn
 	C.network = 'resnet50'
+elif options.network == 'vgg':
+	C.network = 'vgg'
+	from keras_frcnn import vgg as nn
 else:
 	print('Not a valid model')
 	raise ValueError
