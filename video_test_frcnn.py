@@ -14,6 +14,8 @@ from keras_frcnn import roi_helpers
 
 sys.setrecursionlimit(40000)
 
+cap = cv2.VideoCapture(0)
+
 parser = OptionParser()
 
 parser.add_option("-p", "--path", dest="test_path", help="Path to test data.")
@@ -25,10 +27,6 @@ parser.add_option("--config_filename", dest="config_filename", help=
 parser.add_option("--network", dest="network", help="Base network to use. Supports vgg or resnet50.", default='resnet50')
 
 (options, args) = parser.parse_args()
-
-if not options.test_path:   # if filename is not given
-	parser.error('Error: path to test data must be specified. Pass --path to command line')
-
 
 config_output_filename = options.config_filename
 
@@ -44,8 +42,6 @@ elif C.network == 'vgg':
 C.use_horizontal_flips = False
 C.use_vertical_flips = False
 C.rot_90 = False
-
-img_path = options.test_path
 
 def format_img_size(img, C):
 	""" formats the image size based on config """
@@ -147,14 +143,9 @@ bbox_threshold = 0.8
 
 visualise = True
 
-for idx, img_name in enumerate(sorted(os.listdir(img_path))):
-	if not img_name.lower().endswith(('.bmp', '.jpeg', '.jpg', '.png', '.tif', '.tiff')):
-		continue
-	print(img_name)
-	st = time.time()
-	filepath = os.path.join(img_path,img_name)
-
-	img = cv2.imread(filepath)
+while(True):
+	# Capture frame-by-frame
+	ret, img = cap.read()
 
 	X, ratio = format_img(img, C)
 
@@ -240,8 +231,9 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 			cv2.rectangle(img, (textOrg[0] - 5,textOrg[1]+baseLine - 5), (textOrg[0]+retval[0] + 5, textOrg[1]-retval[1] - 5), (255, 255, 255), -1)
 			cv2.putText(img, textLabel, textOrg, cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 0), 1)
 
-	print('Elapsed time = {}'.format(time.time() - st))
-	print(all_dets)
-	cv2.imshow('img', img)
-	cv2.waitKey(0)
-	# cv2.imwrite('./results_imgs/{}.png'.format(idx),img)
+	cv2.imshow('frame', img)
+	if cv2.waitKey(1) & 0xFF == ord('q'):
+		break
+
+cap.release()
+cv2.destroyAllWindows()
