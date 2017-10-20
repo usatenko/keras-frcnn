@@ -14,8 +14,6 @@ from keras_frcnn import roi_helpers
 
 sys.setrecursionlimit(40000)
 
-cap = cv2.VideoCapture(0)
-
 parser = OptionParser()
 
 parser.add_option("-p", "--path", dest="test_path", help="Path to test data.")
@@ -143,9 +141,11 @@ bbox_threshold = 0.8
 
 visualise = True
 
+vid = cv2.VideoCapture(0)
+
 while(True):
 	# Capture frame-by-frame
-	ret, img = cap.read()
+	ret, img = vid.read()
 
 	X, ratio = format_img(img, C)
 
@@ -235,5 +235,5 @@ while(True):
 	if cv2.waitKey(1) & 0xFF == ord('q'):
 		break
 
-cap.release()
+vid.release()
 cv2.destroyAllWindows()
