@@ -141,7 +141,7 @@ bbox_threshold = 0.8
 
 visualise = True
 
-vid = cv2.VideoCapture(0)
+vid = cv2.VideoCapture("tv0.mp4")
 
 while(True):
 	# Capture frame-by-frame
