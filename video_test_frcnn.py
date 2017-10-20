@@ -1,11 +1,16 @@
 from __future__ import division
 import os
+from random import random
+
 import cv2
 import numpy as np
 import sys
 import pickle
 from optparse import OptionParser
 import time
+
+from datetime import datetime
+
 from keras_frcnn import config
 from keras import backend as K
 from keras.layers import Input
@@ -232,6 +237,8 @@ while(True):
 			cv2.putText(img, textLabel, textOrg, cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 0), 1)
 
 	cv2.imshow('frame', img)
+	cv2.imwrite("testimage" + str(time.time()), img)
+
 	if cv2.waitKey(1) & 0xFF == ord('q'):
 		break
 
