@@ -237,7 +237,7 @@ while(True):
 			cv2.putText(img, textLabel, textOrg, cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 0), 1)
 
 	cv2.imshow('frame', img)
-	cv2.imwrite("testimage" + str(time.time()), img)
+	cv2.imwrite("testimage" + str(time.time()) + ".jpg", img)
 
 	if cv2.waitKey(1) & 0xFF == ord('q'):
 		break
