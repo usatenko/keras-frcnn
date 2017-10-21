@@ -40,6 +40,8 @@ if C.network == 'resnet50':
 	import keras_frcnn.resnet as nn
 elif C.network == 'vgg':
 	import keras_frcnn.vgg as nn
+elif C.network == 'inception4':
+	import keras_frcnn.inception4 as nn
 
 # turn off any data augmentation at test time
 C.use_horizontal_flips = False
@@ -104,6 +106,8 @@ if C.network == 'resnet50':
 	num_features = 1024
 elif C.network == 'vgg':
 	num_features = 512
+elif C.network == 'inception4':
+	num_features = 1024
 
 if K.image_dim_ordering() == 'th':
 	input_shape_img = (3, None, None)
